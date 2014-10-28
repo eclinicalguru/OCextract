@@ -1,0 +1,613 @@
+
+proc datasets library=FPM;
+copy out=work;
+run;
+proc format;
+value CL_14_ 1="Yes" 0="No" ;
+value CL_34_ 1="I" 2="II" 3="III" 4="IV" 5="V" ;
+value CL_35_ 1="None" 2="Dose Interrupted" 3="Dose Discontinued" 4="Dose Modified" ;
+value CL_36_ 1="Recovered without sequelae" 2="Recovered with sequelae" 3="Ongoing" 4="Unknown" 5="Other" ;
+value CL_37_ 1="Yes" 2="No" ;
+value $CL_41_ "1"="First Visit" "3"="3-week Follow Up" "6"="6-week Follow Up" "10"="Subsequent Follow Up Visits" "99"="Logs" ;
+value CL_45_ 1="Yes" 2="No" ;
+value CL_47_ 1="Hourly" 2="Daily" 3="2x per day" 4="3x per day" 5="Weekly" 6="Monthly" 7="As needed" ;
+value CL_49_ 1="Male" 2="Female" ;
+value CL_50_ 1="Hispanic" 2="Non Hispanic" 3="Unknown" ;
+value CL_52_ 1="Single" 2="Married" 3="Divorced/Separated" 4="Widowed" 5="Unknown" ;
+value CL_53_ 1="Did not graduate from High School" 2="High School or GED" 3="2 year college" 4="4 year college" 5="Masters" 6="PhD" ;
+value $CL_55_ "Y"="Yes" "N"="No" ;
+value CL_56_ 1="Yes" 2="No" ;
+value CL_59_ 1="Eligible" 2="Ineligible" ;
+value CL_94_ 0="Negative" 9="Trace" 1="1+" 2="2+" 3="3+" 4="4+" ;
+value CL_95_ 1="Positive" 0="Negative" ;
+value CL_62_ 0="Negative" 9="Trace" 1="1+" 2="2+" 3="3+" 4="4+" ;
+value CL_63_ 1="Positive" 0="Negative" ;
+value CL_64_ 1="Yes" 2="No" 3="N/A" ;
+value CL_66_ 1="Normal" 2="Abnormal" ;
+value CL_68_ 1="Yes" 0="No" ;
+value CL_69_ 3="Yes" 0="No" ;
+value CL_70_ 5="Yes" 0="No" ;
+value CL_74_ 1="Normal" 2="Abnormal" 99="Not Examined" ;
+value CL_76_ 1="Normal" 2="Abnormal" ;
+value CL_77_ 1="Yes" 2="No" ;
+value CL_78_ 1="Death" 2="Life-threatening" 3="Prolonged hospitalization" 4="Disability" 5="Other" ;
+value CL_80_ 1="First Visit" 2="1-week Follow Up" 3="2-week Follow Up" 4="Monthly Follow Up" ;
+value CL_81_ 1="Inclusion/Exclusion" 2="Neurological Exam" 3="MRI" 4="Pharmacokinetics" 5="Vital Signs" 6="Local Lab" 7="Physical Exam" ;
+value CL_84_ 1="Mother" 2="Father" 3="Brother" 4="Sister" 5="Maternal Grandfather" 6="Maternal Grandmother" 7="Maternal Aunt" 8="Paternal Grandfather" 10="Paternal Grandmother" 11="Paternal Uncle" 12="Paternal Aunt" ;
+value CL_86_ 1="Celsius" 2="Fahrenheit" ;
+value CL_87_ 1="lbs/inches" 2="cm/kg" ;
+value CL_88_ 1="Yes" 2="No" ;
+value CL_96_ 1="Yes" 2="No" 3="N/A" ;
+value CL_98_ 1="Normal" 2="Abnormal" ;
+
+run;
+
+data IG_VERIF_UNGROUPED;
+set IG_VERIF_UNGROUPED;
+format ELIGIBILITY_CONF CL_14_.;
+run;
+
+data IG_ADVER_AELOG;
+set IG_ADVER_AELOG;
+format AE_SEV CL_34_.;
+run;
+
+data IG_ADVER_AELOG;
+set IG_ADVER_AELOG;
+format AE_ACT CL_35_.;
+run;
+
+data IG_ADVER_AELOG;
+set IG_ADVER_AELOG;
+format AE_OUT CL_36_.;
+run;
+
+data IG_COMPL_CD;
+set IG_COMPL_CD;
+format CD_YN CL_37_.;
+run;
+
+data IG_COMPL_CD;
+set IG_COMPL_CD;
+format MISS_EV $CL_41_.;
+run;
+
+data IG_CONCO_CONMEDS;
+set IG_CONCO_CONMEDS;
+format CM_YN CL_45_.;
+run;
+
+data IG_CONCO_CONMEDLOG;
+set IG_CONCO_CONMEDLOG;
+format CM_FREQ CL_47_.;
+run;
+
+data IG_CONCO_CONMEDLOG;
+set IG_CONCO_CONMEDLOG;
+format CM_ONGNG CL_45_.;
+run;
+
+data IG_DEMOG_DEMO;
+set IG_DEMOG_DEMO;
+format DEM_GEN CL_49_.;
+run;
+
+data IG_DEMOG_DEMO;
+set IG_DEMOG_DEMO;
+format DEM_ETH CL_50_.;
+run;
+
+data IG_DEMOG_DEMO;
+set IG_DEMOG_DEMO;
+format DEM_MAR CL_52_.;
+run;
+
+data IG_DEMOG_DEMO;
+set IG_DEMOG_DEMO;
+format DEM_EDU CL_53_.;
+run;
+
+data IG_DIABE_DIABETES;
+set IG_DIABE_DIABETES;
+format DIABETES_CMOCCUR $CL_55_.;
+run;
+
+data IG_DIABE_DIABETES;
+set IG_DIABE_DIABETES;
+format INSULIN_CMOCCUR $CL_55_.;
+run;
+
+data IG_DIABE_DIABETES;
+set IG_DIABE_DIABETES;
+format RETINOPATHY_MHOCCUR $CL_55_.;
+run;
+
+data IG_DIABE_DIABETES;
+set IG_DIABE_DIABETES;
+format SGOCCUR $CL_55_.;
+run;
+
+data IG_DIABE_DIABETES;
+set IG_DIABE_DIABETES;
+format AUTONOMIC_NEUROPATHY_MHOCCUR $CL_55_.;
+run;
+
+data IG_DIABE_DIABETES;
+set IG_DIABE_DIABETES;
+format OTHER_DIABETIC_NEUROPATHY_MHOCCUR $CL_55_.;
+run;
+
+data IG_DIABE_DIABETES;
+set IG_DIABE_DIABETES;
+format DIABETIC_NEPHROPATHY_MHOCCUR $CL_55_.;
+run;
+
+data IG_DIABE_DIABETES;
+set IG_DIABE_DIABETES;
+format SEVERE_HYPOGLYCEMIC_REACTION_MHOCCUR $CL_55_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format IN_NINCDS CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format IN_MMSE CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format IN_NMDA CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format IN_HOME CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format IN_CARE CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format IN_ENGSP CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format IN_STBL CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format IN_DOSE CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format IN_HEPIN CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format IN_ORAL CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format IN_IC CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format EX_OGTT CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format EX_HEP CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format EX_CARD CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format EX_RECNT CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format EX_STRKE CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format EX_SEIZ CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format EX_MENTL CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format EX_ORAL CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format EX_INS CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format EX_DRUG CL_56_.;
+run;
+
+data IG_INCLU_ELIGIBILITY;
+set IG_INCLU_ELIGIBILITY;
+format INEX_ELIG CL_59_.;
+run;
+
+data IG_LOCAL_TESTS;
+set IG_LOCAL_TESTS;
+format UR_PRO CL_94_.;
+run;
+
+data IG_LOCAL_TESTS;
+set IG_LOCAL_TESTS;
+format UR_LEUK CL_95_.;
+run;
+
+data IG_LOCAL_TESTS;
+set IG_LOCAL_TESTS;
+format UR_NITR CL_95_.;
+run;
+
+data IG_MRIFO_MRI;
+set IG_MRIFO_MRI;
+format MRI_YN CL_64_.;
+run;
+
+data IG_MRIFO_MRI;
+set IG_MRIFO_MRI;
+format MRI_RES CL_66_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_YEAR CL_68_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_SEASN CL_68_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_MONTH CL_68_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_DATE CL_68_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_DAYWK CL_68_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_CNTRY CL_68_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_STATE CL_68_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_CITY CL_68_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_BUILD CL_68_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_FLOOR CL_68_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_OBJ CL_69_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_SPELL CL_70_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_OBJ2 CL_69_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_WATCH CL_68_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_PENCIL CL_68_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_REPT CL_68_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_VDIR CL_69_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_WDIR CL_68_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_CPY CL_68_.;
+run;
+
+data IG_MINIM_MMSE;
+set IG_MINIM_MMSE;
+format MM_SENT CL_68_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format APPEARANCE CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format SKIN CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format HEENT CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format THYROID CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format CHEST CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format LUNGS CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format BREAST CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format HEART CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format ABDOMEN CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format MUSCULOSKELETAL CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format GENITALIA CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format PELVIS CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format RECTAL CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format PROSTATE CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format VASCULAR CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format NEUROLOGICAL CL_74_.;
+run;
+
+data IG_PHYSI_BODYSYSTEM;
+set IG_PHYSI_BODYSYSTEM;
+format LYMPHNODES CL_74_.;
+run;
+
+data IG_PHYSI_OTHERBODYSYSTEMSITE_9803;
+set IG_PHYSI_OTHERBODYSYSTEMSITE_9803;
+format OTHERBODYSYSTEM_STATUS CL_76_.;
+run;
+
+data IG_SERIO_SAE1;
+set IG_SERIO_SAE1;
+format SAE1_YN CL_77_.;
+run;
+
+data IG_SERIO_SAE1;
+set IG_SERIO_SAE1;
+format SAE1_CAT CL_78_.;
+run;
+
+data IG_SERIO_SAE1;
+set IG_SERIO_SAE1;
+format SAE1_CON CL_77_.;
+run;
+
+data IG_SERIO_SAE1;
+set IG_SERIO_SAE1;
+format SAE1_STAT CL_77_.;
+run;
+
+data IG_SERIO_SAE1;
+set IG_SERIO_SAE1;
+format SAE2_YN CL_77_.;
+run;
+
+data IG_SERIO_SAE2;
+set IG_SERIO_SAE2;
+format SAE2_CAT CL_78_.;
+run;
+
+data IG_SERIO_SAE2;
+set IG_SERIO_SAE2;
+format SAE2_CON CL_77_.;
+run;
+
+data IG_SERIO_SAE2;
+set IG_SERIO_SAE2;
+format SAE2_STAT CL_77_.;
+run;
+
+data IG_SERIO_SAE2;
+set IG_SERIO_SAE2;
+format SAE3_YN CL_77_.;
+run;
+
+data IG_SERIO_SAE3;
+set IG_SERIO_SAE3;
+format SAE3_CAT CL_78_.;
+run;
+
+data IG_SERIO_SAE3;
+set IG_SERIO_SAE3;
+format SAE3_CON CL_77_.;
+run;
+
+data IG_SERIO_SAE3;
+set IG_SERIO_SAE3;
+format SAE3_STAT CL_77_.;
+run;
+
+data IG_SERIO_SAE3;
+set IG_SERIO_SAE3;
+format SAE4_YN CL_77_.;
+run;
+
+data IG_SERIO_SAE4;
+set IG_SERIO_SAE4;
+format SAE4_CAT CL_78_.;
+run;
+
+data IG_SERIO_SAE4;
+set IG_SERIO_SAE4;
+format SAE4_CON CL_77_.;
+run;
+
+data IG_SERIO_SAE4;
+set IG_SERIO_SAE4;
+format SAE4_STAT CL_77_.;
+run;
+
+data IG_SERIO_SAE4;
+set IG_SERIO_SAE4;
+format SAE5_YN CL_77_.;
+run;
+
+data IG_SERIO_SAE5;
+set IG_SERIO_SAE5;
+format SAE5_CAT CL_78_.;
+run;
+
+data IG_SERIO_SAE5;
+set IG_SERIO_SAE5;
+format SAE5_CON CL_77_.;
+run;
+
+data IG_SERIO_SAE5;
+set IG_SERIO_SAE5;
+format SAE5_STAT CL_77_.;
+run;
+
+data IG_PROTO_PROTOCOLDEVIATIONLOG;
+set IG_PROTO_PROTOCOLDEVIATIONLOG;
+format PD_EVENT CL_80_.;
+run;
+
+data IG_PROTO_PROTOCOLDEVIATIONLOG;
+set IG_PROTO_PROTOCOLDEVIATIONLOG;
+format PD_PRODEV CL_81_.;
+run;
+
+data IG_MEDIC_G2;
+set IG_MEDIC_G2;
+format FAM_ID CL_84_.;
+run;
+
+data IG_VITAL_VITALS;
+set IG_VITAL_VITALS;
+format VS_TUNIT CL_86_.;
+run;
+
+data IG_VITAL_VITALS;
+set IG_VITAL_VITALS;
+format VS_UNITS CL_87_.;
+run;
+
+data IG_VITAL_VITALS;
+set IG_VITAL_VITALS;
+format VS_BPHR CL_88_.;
+run;
+
+data IG_PARAM_MRI;
+set IG_PARAM_MRI;
+format MRI_YN CL_96_.;
+run;
+
+data IG_PARAM_MRI;
+set IG_PARAM_MRI;
+format MRI_RES CL_98_.;
+run;
