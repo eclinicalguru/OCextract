@@ -1,0 +1,136 @@
+
+filename  FPM "../SAS_DATA_2014-09-19-185309306.xml";
+filename  SXLEMAP "../edcmap.map";
+libname   FPM xmlv2 xmlmap=SXLEMAP access=READONLY;
+
+proc datasets library=FPM;
+  copy out=work;
+run;
+
+proc format;
+value CL_14_ 1="Yes" 0="No" ;
+value CL_34_ 1="I" 2="II" 3="III" 4="IV" 5="V" ;
+value CL_35_ 1="None" 2="Dose Interrupted" 3="Dose Discontinued" 4="Dose Modified" ;
+value CL_36_ 1="Recovered without sequelae" 2="Recovered with sequelae" 3="Ongoing" 4="Unknown" 5="Other" ;
+value CL_37_ 1="Yes" 2="No" ;
+value $CL_41_ "1"="First Visit" "3"="3-week Follow Up" "6"="6-week Follow Up" "10"="Subsequent Follow Up Visits" "99"="Logs" ;
+value CL_45_ 1="Yes" 2="No" ;
+value CL_47_ 1="Hourly" 2="Daily" 3="2x per day" 4="3x per day" 5="Weekly" 6="Monthly" 7="As needed" ;
+value CL_49_ 1="Male" 2="Female" ;
+value CL_50_ 1="Hispanic" 2="Non Hispanic" 3="Unknown" ;
+value CL_52_ 1="Single" 2="Married" 3="Divorced/Separated" 4="Widowed" 5="Unknown" ;
+value CL_53_ 1="Did not graduate from High School" 2="High School or GED" 3="2 year college" 4="4 year college" 5="Masters" 6="PhD" ;
+value $CL_55_ "Y"="Yes" "N"="No" ;
+value CL_56_ 1="Yes" 2="No" ;
+value CL_59_ 1="Eligible" 2="Ineligible" ;
+value CL_94_ 0="Negative" 9="Trace" 1="1+" 2="2+" 3="3+" 4="4+" ;
+value CL_95_ 1="Positive" 0="Negative" ;
+value CL_62_ 0="Negative" 9="Trace" 1="1+" 2="2+" 3="3+" 4="4+" ;
+value CL_63_ 1="Positive" 0="Negative" ;
+value CL_64_ 1="Yes" 2="No" 3="N/A" ;
+value CL_66_ 1="Normal" 2="Abnormal" ;
+value CL_68_ 1="Yes" 0="No" ;
+value CL_69_ 3="Yes" 0="No" ;
+value CL_70_ 5="Yes" 0="No" ;
+value CL_74_ 1="Normal" 2="Abnormal" 99="Not Examined" ;
+value CL_76_ 1="Normal" 2="Abnormal" ;
+value CL_77_ 1="Yes" 2="No" ;
+value CL_78_ 1="Death" 2="Life-threatening" 3="Prolonged hospitalization" 4="Disability" 5="Other" ;
+value CL_80_ 1="First Visit" 2="1-week Follow Up" 3="2-week Follow Up" 4="Monthly Follow Up" ;
+value CL_81_ 1="Inclusion/Exclusion" 2="Neurological Exam" 3="MRI" 4="Pharmacokinetics" 5="Vital Signs" 6="Local Lab" 7="Physical Exam" ;
+value CL_84_ 1="Mother" 2="Father" 3="Brother" 4="Sister" 5="Maternal Grandfather" 6="Maternal Grandmother" 7="Maternal Aunt" 8="Paternal Grandfather" 10="Paternal Grandmother" 11="Paternal Uncle" 12="Paternal Aunt" ;
+value CL_86_ 1="Celsius" 2="Fahrenheit" ;
+value CL_87_ 1="lbs/inches" 2="cm/kg" ;
+value CL_88_ 1="Yes" 2="No" ;
+value CL_96_ 1="Yes" 2="No" 3="N/A" ;
+value CL_98_ 1="Normal" 2="Abnormal" ;
+
+run;
+
+
+
+title 'Table FPM';
+proc print data=FPM.FPM(obs=10); run;
+title;
+
+title 'Table IG_VERIF_UNGROUPED';
+proc print data=FPM.IG_VERIF_UNGROUPED(obs=10); run;
+title;
+
+title 'Table IG_MINIM_MMSE';
+proc print data=FPM.IG_MINIM_MMSE(obs=10); run;
+title;
+
+title 'Table IG_INCLU_ELIGIBILITY';
+proc print data=FPM.IG_INCLU_ELIGIBILITY(obs=10); run;
+title;
+
+title 'Table IG_DEMOG_DEMO';
+proc print data=FPM.IG_DEMOG_DEMO(obs=10); run;
+title;
+
+title 'Table IG_DIABE_DIABETES';
+proc print data=FPM.IG_DIABE_DIABETES(obs=10); run;
+title;
+
+title 'Table IG_LOCAL_TESTS';
+proc print data=FPM.IG_LOCAL_TESTS(obs=10); run;
+title;
+
+title 'Table IG_MRIFO_MRI';
+proc print data=FPM.IG_MRIFO_MRI(obs=10); run;
+title;
+
+title 'Table IG_PHYSI_BODYSYSTEM';
+proc print data=FPM.IG_PHYSI_BODYSYSTEM(obs=10); run;
+title;
+
+title 'Table IG_VITAL_VITALS';
+proc print data=FPM.IG_VITAL_VITALS(obs=10); run;
+title;
+
+title 'Table IG_PHARM_RESULTS';
+proc print data=FPM.IG_PHARM_RESULTS(obs=10); run;
+title;
+
+title 'Table IG_PHYSI_OTHERBODYSYSTEMSITE_980';
+proc print data=FPM.IG_PHYSI_OTHERBODYSYSTEMSITE_980(obs=10); run;
+title;
+
+title 'Table IG_VITAL_BPLOG';
+proc print data=FPM.IG_VITAL_BPLOG(obs=10); run;
+title;
+
+title 'Table IG_COMPL_CD';
+proc print data=FPM.IG_COMPL_CD(obs=10); run;
+title;
+
+title 'Table IG_MEDIC_G1';
+proc print data=FPM.IG_MEDIC_G1(obs=10); run;
+title;
+
+title 'Table IG_MEDIC_G2';
+proc print data=FPM.IG_MEDIC_G2(obs=10); run;
+title;
+
+title 'Table IG_PROTO_PROTOCOLDEVIATIONLOG';
+proc print data=FPM.IG_PROTO_PROTOCOLDEVIATIONLOG(obs=10); run;
+title;
+
+title 'Table IG_CONCO_CONMEDS';
+proc print data=FPM.IG_CONCO_CONMEDS(obs=10); run;
+title;
+
+title 'Table IG_CONCO_CONMEDLOG';
+proc print data=FPM.IG_CONCO_CONMEDLOG(obs=10); run;
+title;
+
+title 'Table IG_SERIO_SAE1';
+proc print data=FPM.IG_SERIO_SAE1(obs=10); run;
+title;
+
+title 'Table IG_ADVER_AELOG';
+proc print data=FPM.IG_ADVER_AELOG(obs=10); run;
+title;
+
+
